@@ -17,7 +17,7 @@ const categories = [
       { icon: Home, name: "Domótica" },
       { icon: Film, name: "Home Theater" },
       { icon: Shield, name: "Segurança" },
-      { icon: Lock, name: "Controlo de Acesso" },
+      { icon: Lock, name: "Controlo de Acessos" },
     ],
   },
   {
