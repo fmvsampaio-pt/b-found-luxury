@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo-bfound.png";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -31,9 +32,9 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between py-5 px-6">
-        <a href="#" className="font-display text-2xl tracking-wider text-gradient-gold">
-          B-Found
-        </a>
+         <a href="#" className="flex items-center">
+           <img src={logo} alt="B-Found" className="h-10 w-auto" />
+         </a>
 
         {/* Desktop */}
         <nav className="hidden md:flex items-center gap-10">
