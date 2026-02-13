@@ -1,9 +1,11 @@
+import logo from "@/assets/logo-bfound.png";
+
 const Footer = () => {
   return (
     <footer className="py-12 border-t border-border">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        <a href="#" className="font-display text-xl tracking-wider text-gradient-gold">
-          B-Found
+        <a href="#" className="flex items-center">
+          <img src={logo} alt="B-Found" className="h-8 w-auto" />
         </a>
 
         <div className="flex items-center gap-8">
