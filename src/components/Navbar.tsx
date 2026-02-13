@@ -4,10 +4,10 @@ import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-bfound.png";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
+  { label: "Sobre Nós", href: "#about" },
+  { label: "Serviços", href: "#services" },
+  { label: "Processo", href: "#process" },
+  { label: "Contacto", href: "#contact" },
 ];
 
 const Navbar = () => {

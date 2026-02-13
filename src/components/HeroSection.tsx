@@ -24,7 +24,7 @@ const HeroSection = () => {
         >
           <div className="line-gold-center mb-8" />
           <p className="text-sm tracking-[0.4em] uppercase text-primary mb-6 font-body">
-            Premium & Luxury Solutions
+            Soluções Premium & Luxo
           </p>
         </motion.div>
 
@@ -34,9 +34,9 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.5 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-medium leading-tight mb-8"
         >
-          <span className="text-gradient-gold">Integrated</span>
+          <span className="text-gradient-gold">Entretenimento</span>
           <br />
-          Entertainment
+          Integrado
         </motion.h1>
 
         <motion.p
