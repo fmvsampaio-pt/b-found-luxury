@@ -7,7 +7,7 @@ const Footer = () => {
         </a>
 
         <div className="flex items-center gap-8">
-          {["Facebook", "Instagram", "Twitter"].map((social) => (
+          {["Facebook", "Instagram", "LinkedIn"].map((social) => (
             <a
               key={social}
               href="#"
