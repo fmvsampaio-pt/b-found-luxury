@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-bfound.png";
@@ -8,11 +9,13 @@ const navLinks = [
   { label: "Serviços", href: "#services" },
   { label: "Processo", href: "#process" },
   { label: "Contacto", href: "#contact" },
+  { label: "Guia de Planeamento", href: "/planeamento", isRoute: true },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -20,11 +23,15 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (link.isRoute) {
+      navigate(link.href);
+    } else {
+      const target = document.querySelector(link.href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
     setMobileOpen(false);
   };
@@ -51,7 +58,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
+              onClick={(e) => handleNavClick(e, link)}
               className="text-sm font-body tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
             >
               {link.label}
@@ -82,7 +89,7 @@ const Navbar = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={(e) => handleNavClick(e, link)}
                   className="text-sm font-body tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors"
                 >
                   {link.label}
