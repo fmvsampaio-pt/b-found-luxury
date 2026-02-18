@@ -100,29 +100,29 @@ const ServicesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="grid md:grid-cols-2 gap-12 items-center"
+          className="grid md:grid-cols-2 gap-8 items-start"
         >
-          <div className="relative overflow-hidden group">
+          <div className="relative overflow-hidden group rounded-sm">
             <img
               src={current.image}
               alt={current.title}
-              className="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
           </div>
 
           <div>
-            <h3 className="font-display text-3xl mb-8 text-foreground">
+            <h3 className="font-display text-3xl mb-6 text-foreground">
               {current.title}
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {current.services.map((service, i) => (
                 <motion.div
                   key={service.name}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="flex items-center gap-4 p-4 border border-border hover:border-primary/40 transition-colors duration-300 group/item"
+                  className="flex items-center gap-3 p-3 border border-border hover:border-primary/40 transition-colors duration-300 group/item"
                 >
                   <service.icon className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-sm tracking-wide text-muted-foreground group-hover/item:text-foreground transition-colors">
