@@ -8,8 +8,8 @@ const navLinks = [
   { label: "Sobre Nós", href: "#about" },
   { label: "Serviços", href: "#services" },
   { label: "Processo", href: "#process" },
-  { label: "Contacto", href: "#contact" },
   { label: "Guia de Planeamento", href: "/planeamento", isRoute: true },
+  { label: "Contacto", href: "#contact" },
 ];
 
 const Navbar = () => {
