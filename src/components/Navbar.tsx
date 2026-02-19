@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-bfound.png";
@@ -8,14 +7,14 @@ const navLinks = [
   { label: "Sobre Nós", href: "#about" },
   { label: "Serviços", href: "#services" },
   { label: "Processo", href: "#process" },
-  { label: "Guia de Planeamento", href: "/planeamento", isRoute: true },
+  { label: "Guia de Planeamento", href: "#planning" },
   { label: "Contacto", href: "#contact" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -25,13 +24,9 @@ const Navbar = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: typeof navLinks[0]) => {
     e.preventDefault();
-    if (link.isRoute) {
-      navigate(link.href);
-    } else {
-      const target = document.querySelector(link.href);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    const target = document.querySelector(link.href);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setMobileOpen(false);
   };
