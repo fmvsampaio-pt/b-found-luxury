@@ -6,7 +6,7 @@ const PlanningCTA = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="planning" className="py-20 relative overflow-hidden">
+    <section id="planning" className="py-20 relative overflow-hidden scroll-mt-24">
       <div className="absolute inset-0 bg-luxury-radial opacity-50" />
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
