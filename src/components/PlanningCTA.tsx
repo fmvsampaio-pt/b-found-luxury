@@ -16,10 +16,6 @@ const PlanningCTA = () => {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-xs tracking-[0.2em] uppercase text-primary font-body">Novo</span>
-          </div>
 
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-6">
             <span className="text-gradient-gold">Planeie</span> a sua
