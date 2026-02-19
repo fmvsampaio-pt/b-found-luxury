@@ -6,7 +6,7 @@ const PlanningCTA = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="planning" className="py-20 relative overflow-hidden scroll-mt-24">
+    <section id="planning" className="py-32 relative overflow-hidden scroll-mt-24">
       <div className="absolute inset-0 bg-luxury-radial opacity-50" />
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
@@ -16,7 +16,10 @@ const PlanningCTA = () => {
           transition={{ duration: 0.8 }}
           className="max-w-3xl mx-auto text-center"
         >
-
+          <p className="text-sm tracking-[0.4em] uppercase text-primary mb-4 font-body">
+            Guia de Planeamento
+          </p>
+          <div className="line-gold-center mb-10" />
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-6">
             <span className="text-gradient-gold">Planeie</span> a sua
             <br />Casa Inteligente
