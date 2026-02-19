@@ -15,7 +15,7 @@ const ProcessSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="process" className="py-32 bg-luxury-gradient">
+    <section id="process" className="py-32 bg-luxury-gradient scroll-mt-24">
       <div className="container mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
