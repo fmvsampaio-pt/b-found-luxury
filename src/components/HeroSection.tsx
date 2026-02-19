@@ -55,7 +55,11 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 1.1 }}
         >
           <a
-            href="#services"
+            href="#about"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector("#about")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
             className="inline-block px-10 py-4 border border-primary text-primary text-sm tracking-[0.2em] uppercase font-body hover:bg-primary hover:text-primary-foreground transition-all duration-500"
           >
             Descobrir Mais
