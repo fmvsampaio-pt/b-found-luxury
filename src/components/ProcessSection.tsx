@@ -1,18 +1,16 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const steps = [
-  { number: "01", title: "Consultoria", desc: "Análise detalhada das necessidades e objetivos do cliente." },
-  { number: "02", title: "Design", desc: "Projeto personalizado em colaboração com a equipa de arquitetura." },
-  { number: "03", title: "Instalação", desc: "Instalação e configuração profissional de todos os equipamentos." },
-  { number: "04", title: "Integração", desc: "Integração de sistemas para controlo centralizado." },
-  { number: "05", title: "Testes", desc: "Testes rigorosos de funcionamento e integração." },
-  { number: "06", title: "Suporte", desc: "Suporte técnico contínuo e manutenção preventiva." },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ProcessSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
+
+  const steps = t.process.steps.map((step, i) => ({
+    number: String(i + 1).padStart(2, "0"),
+    ...step,
+  }));
 
   return (
     <section id="process" className="py-32 bg-luxury-gradient scroll-mt-24">
@@ -24,11 +22,11 @@ const ProcessSection = () => {
           className="text-center mb-20"
         >
           <p className="text-sm tracking-[0.4em] uppercase text-primary mb-4 font-body">
-            Processo
+            {t.process.label}
           </p>
           <div className="line-gold-center mb-10" />
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
-            Como <span className="text-gradient-gold italic">Trabalhamos</span>
+            {t.process.title} <span className="text-gradient-gold italic">{t.process.titleHighlight}</span>
           </h2>
         </motion.div>
 

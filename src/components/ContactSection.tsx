@@ -1,10 +1,19 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
+
+  const items = [
+    { icon: MapPin, ...t.contact.address },
+    { icon: Clock, ...t.contact.hours },
+    { icon: Phone, ...t.contact.phone },
+    { icon: Mail, ...t.contact.email },
+  ];
 
   return (
     <section id="contact" className="py-32 scroll-mt-24">
@@ -16,11 +25,11 @@ const ContactSection = () => {
           className="text-center mb-20"
         >
           <p className="text-sm tracking-[0.4em] uppercase text-primary mb-4 font-body">
-            Contacto
+            {t.contact.label}
           </p>
           <div className="line-gold-center mb-10" />
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
-            Fale <span className="text-gradient-gold italic">Connosco</span>
+            {t.contact.title} <span className="text-gradient-gold italic">{t.contact.titleHighlight}</span>
           </h2>
         </motion.div>
 
@@ -30,28 +39,7 @@ const ContactSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto"
         >
-          {[
-            {
-              icon: MapPin,
-              title: "Morada",
-              lines: ["Av. Amália Rodrigues 36B", "2650-445 Amadora, Portugal"],
-            },
-            {
-              icon: Clock,
-              title: "Horário",
-              lines: ["9:00 – 18:00", "Segunda – Sexta"],
-            },
-            {
-              icon: Phone,
-              title: "Telefone",
-              lines: ["+351 210 939 977"],
-            },
-            {
-              icon: Mail,
-              title: "Email",
-              lines: ["geral@b-found.pt"],
-            },
-          ].map((item) => (
+          {items.map((item) => (
             <div
               key={item.title}
               className="text-center p-8 border border-border hover:border-primary/30 transition-all duration-500"
