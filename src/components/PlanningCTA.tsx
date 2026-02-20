@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const PlanningCTA = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <section id="planning" className="py-32 relative overflow-hidden scroll-mt-24">
@@ -17,23 +19,23 @@ const PlanningCTA = () => {
           className="max-w-3xl mx-auto text-center"
         >
           <p className="text-sm tracking-[0.4em] uppercase text-primary mb-4 font-body">
-            Guia de Planeamento
+            {t.planning.label}
           </p>
           <div className="line-gold-center mb-10" />
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl mb-6">
-            <span className="text-gradient-gold">Planeie</span> a sua
-            <br />Casa Inteligente
+            <span className="text-gradient-gold">{t.planning.title1}</span> {t.planning.title2}
+            <br />{t.planning.title3}
           </h2>
 
           <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto mb-10 font-light leading-relaxed">
-            Utilize o nosso guia interactivo para configurar a tecnologia ideal para a sua casa e receba um orçamento personalizado.
+            {t.planning.description}
           </p>
 
           <button
             onClick={() => navigate("/planeamento")}
             className="group inline-flex items-center gap-3 px-10 py-5 border-2 border-primary text-primary text-sm tracking-[0.2em] uppercase font-body hover:bg-primary hover:text-primary-foreground transition-all duration-500"
           >
-            Começar Planeamento
+            {t.planning.cta}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </motion.div>

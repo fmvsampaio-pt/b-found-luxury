@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image */}
@@ -24,7 +27,7 @@ const HeroSection = () => {
         >
           <div className="line-gold-center mb-8" />
           <p className="text-sm tracking-[0.4em] uppercase text-primary mb-6 font-body">
-            Soluções Premium & Luxo
+            {t.hero.tagline}
           </p>
         </motion.div>
 
@@ -34,9 +37,9 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.5 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-medium leading-tight mb-8"
         >
-          <span className="text-gradient-gold">Entretenimento</span>
+          <span className="text-gradient-gold">{t.hero.title1}</span>
           <br />
-          Integrado
+          {t.hero.title2}
         </motion.h1>
 
         <motion.p
@@ -45,8 +48,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.8 }}
           className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed"
         >
-          Soluções de entretenimento integrado para o mercado residencial premium e de luxo.
-          Desde 2009.
+          {t.hero.description}
         </motion.p>
 
         <motion.div
@@ -62,7 +64,7 @@ const HeroSection = () => {
             }}
             className="inline-block px-10 py-4 border border-primary text-primary text-sm tracking-[0.2em] uppercase font-body hover:bg-primary hover:text-primary-foreground transition-all duration-500"
           >
-            Descobrir Mais
+            {t.hero.cta}
           </a>
         </motion.div>
       </div>

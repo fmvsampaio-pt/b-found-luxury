@@ -4,53 +4,36 @@ import { Wifi, Music, Home, Shield, Monitor, Film, Lock, Headphones, Server, Set
 import residentialImg from "@/assets/residential.jpg";
 import commercialImg from "@/assets/commercial.jpg";
 import marineImg from "@/assets/marine.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const categories = [
-  {
-    id: "residential",
-    title: "Soluções Residenciais",
-    image: residentialImg,
-    services: [
-      { icon: Wifi, name: "Redes & Wi-Fi" },
-      { icon: Music, name: "Áudio Multiroom" },
-      { icon: Headphones, name: "Hi-Fi Audio" },
-      { icon: Home, name: "Domótica" },
-      { icon: Film, name: "Home Theater" },
-      { icon: Shield, name: "Segurança" },
-      { icon: Lock, name: "Controlo de Acessos" },
-    ],
-  },
-  {
-    id: "commercial",
-    title: "Soluções Comerciais",
-    image: commercialImg,
-    services: [
-      { icon: Server, name: "Consultoria IT" },
-      { icon: Wifi, name: "Infraestrutura de Rede" },
-      { icon: Monitor, name: "Soluções AV" },
-      { icon: Settings, name: "Automação" },
-      { icon: Shield, name: "Segurança" },
-      { icon: Wrench, name: "Suporte Técnico" },
-    ],
-  },
-  {
-    id: "marine",
-    title: "Soluções Marítimas",
-    image: marineImg,
-    services: [
-      { icon: Wifi, name: "Redes & Wi-Fi" },
-      { icon: Settings, name: "Automação" },
-      { icon: Music, name: "Áudio" },
-      { icon: Film, name: "Cinema" },
-      { icon: Shield, name: "Segurança" },
-    ],
-  },
-];
+const categoryIcons = {
+  residential: [Wifi, Music, Headphones, Home, Film, Shield, Lock],
+  commercial: [Server, Wifi, Monitor, Settings, Shield, Wrench],
+  marine: [Wifi, Settings, Music, Film, Shield],
+};
+
+const categoryImages: Record<string, string> = {
+  residential: residentialImg,
+  commercial: commercialImg,
+  marine: marineImg,
+};
 
 const ServicesSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [active, setActive] = useState("residential");
+  const { t } = useLanguage();
+  const [active, setActive] = useState<"residential" | "commercial" | "marine">("residential");
+
+  const categories = (["residential", "commercial", "marine"] as const).map((id) => ({
+    id,
+    title: t.services.categories[id].title,
+    image: categoryImages[id],
+    services: t.services.categories[id].services.map((name, i) => ({
+      icon: categoryIcons[id][i],
+      name,
+    })),
+  }));
+
   const current = categories.find((c) => c.id === active)!;
 
   return (
@@ -64,11 +47,11 @@ const ServicesSection = () => {
           className="text-center mb-16"
         >
           <p className="text-sm tracking-[0.4em] uppercase text-primary mb-4 font-body">
-            Serviços
+            {t.services.label}
           </p>
           <div className="line-gold-center mb-10" />
           <h2 className="font-display text-4xl md:text-5xl text-foreground">
-            O Que <span className="text-gradient-gold italic">Fazemos</span>
+            {t.services.title} <span className="text-gradient-gold italic">{t.services.titleHighlight}</span>
           </h2>
         </motion.div>
 

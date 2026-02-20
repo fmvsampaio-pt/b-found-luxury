@@ -2,19 +2,20 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo-bfound.png";
-
-const navLinks = [
-  { label: "Sobre Nós", href: "#about" },
-  { label: "Serviços", href: "#services" },
-  { label: "Processo", href: "#process" },
-  { label: "Guia de Planeamento", href: "#planning" },
-  { label: "Contacto", href: "#contact" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+  const { language, setLanguage, t } = useLanguage();
+
+  const navLinks = [
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.services, href: "#services" },
+    { label: t.nav.process, href: "#process" },
+    { label: t.nav.planning, href: "#planning" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -61,13 +62,31 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Right side: Lang switcher + mobile toggle */}
+        <div className="flex items-center gap-4">
+          {/* Language switcher */}
+          <button
+            onClick={() => setLanguage(language === "pt" ? "en" : "pt")}
+            className="flex items-center gap-1.5 text-xs tracking-[0.2em] uppercase font-body border border-border hover:border-primary/50 px-3 py-1.5 transition-all duration-300 group"
+            aria-label="Toggle language"
+          >
+            <span className={language === "pt" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}>
+              PT
+            </span>
+            <span className="text-border">|</span>
+            <span className={language === "en" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}>
+              EN
+            </span>
+          </button>
+
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden text-foreground"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -99,3 +118,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
