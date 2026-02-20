@@ -1,8 +1,12 @@
 import logo from "@/assets/logo-bfound.png";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCookieConsent } from "@/contexts/CookieConsentContext";
+
+const cookieLabels = { pt: "Preferências de Cookies", en: "Cookie Preferences" };
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { openPreferences } = useCookieConsent();
 
   return (
     <footer className="py-12 border-t border-border">
@@ -23,9 +27,17 @@ const Footer = () => {
           ))}
         </div>
 
-        <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} B-Found. {t.footer.rights}
-        </p>
+        <div className="flex flex-col items-center md:items-end gap-2">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} B-Found. {t.footer.rights}
+          </p>
+          <button
+            onClick={openPreferences}
+            className="text-xs text-muted-foreground hover:text-primary transition-colors duration-300 underline underline-offset-2"
+          >
+            {cookieLabels[language]}
+          </button>
+        </div>
       </div>
     </footer>
   );
