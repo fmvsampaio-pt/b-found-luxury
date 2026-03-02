@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Home, Music, Wifi, Shield, Lock, Film, Lightbulb, Speaker, Monitor, ChevronLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Home, Anchor, Building2, Music, Wifi, Shield, Lock, Film, Lightbulb, Speaker, Monitor, Settings, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
@@ -8,38 +8,41 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/logo-bfound.png";
 
-const ROOMS = [
-  { id: "living-room", label: "Sala de Estar", icon: Home },
-  { id: "bedrooms", label: "Quartos", icon: Home },
-  { id: "kitchen", label: "Cozinha", icon: Home },
-  { id: "outdoor", label: "Exterior", icon: Home },
-  { id: "cinema-room", label: "Sala de Cinema", icon: Film },
-  { id: "office", label: "Escritório", icon: Monitor },
+const SPACE_TYPES = [
+  { id: "residential", label: "Residência", icon: Home },
+  { id: "marine", label: "Barco / Iate", icon: Anchor },
+  { id: "commercial", label: "Espaço Comercial", icon: Building2 },
+];
+
+const BUILD_TYPES = [
+  { id: "new-build", label: "Construção Nova" },
+  { id: "renovation", label: "Renovação" },
 ];
 
 const SYSTEMS = [
-  { id: "home-automation", label: "Domótica", icon: Home },
+  { id: "home-automation", label: "Automação e Controlo", icon: Settings },
   { id: "multiroom-audio", label: "Áudio Multiroom", icon: Music },
-  { id: "hi-fi", label: "Hi-Fi", icon: Speaker },
-  { id: "wifi-networking", label: "Wi-Fi & Rede", icon: Wifi },
+  { id: "outdoor-audio", label: "Áudio Exterior", icon: Speaker },
+  { id: "hi-fi", label: "Hi‑Fi", icon: Speaker },
+  { id: "wifi-networking", label: "Wi‑Fi e Rede", icon: Wifi },
   { id: "cctv-security", label: "CCTV / Segurança", icon: Shield },
   { id: "access-control", label: "Controlo de Acessos", icon: Lock },
   { id: "home-cinema", label: "Home Cinema", icon: Film },
   { id: "lighting-control", label: "Controlo de Iluminação", icon: Lightbulb },
-  { id: "outdoor-audio", label: "Áudio Exterior", icon: Speaker },
 ];
 
-const PROJECT_TYPES = ["Construção Nova", "Renovação", "Upgrade"];
-const BUDGETS = ["€5.000 – €20.000", "€20.000 – €50.000", "€50.000+"];
-const TIMELINES = ["O mais rápido possível", "1–3 meses", "3–6 meses", "Sem pressa"];
+const TIMELINES = [
+  "Nos próximos 3 meses",
+  "Dentro de 3 a 6 meses",
+  "Sem data definida / Em fase de planeamento",
+];
 
-const STEPS = ["Divisões", "Sistemas", "Projecto", "Orçamento", "Cronograma", "Dados", "Resumo"];
+const STEPS = ["Espaço", "Tipo", "Sistemas", "Cronograma", "Dados", "Resumo"];
 
 type FormData = {
-  rooms: string[];
+  spaceType: string;
+  buildType: string;
   systems: string[];
-  projectType: string;
-  budget: string;
   timeline: string;
   name: string;
   email: string;
@@ -52,10 +55,9 @@ const PlanningWizard = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    rooms: [],
+    spaceType: "",
+    buildType: "",
     systems: [],
-    projectType: "",
-    budget: "",
     timeline: "",
     name: "",
     email: "",
@@ -64,21 +66,22 @@ const PlanningWizard = () => {
 
   const progress = ((step + 1) / STEPS.length) * 100;
 
-  const toggleItem = (key: "rooms" | "systems", id: string) => {
+  const toggleSystem = (id: string) => {
     setFormData((prev) => ({
       ...prev,
-      [key]: prev[key].includes(id) ? prev[key].filter((i) => i !== id) : [...prev[key], id],
+      systems: prev.systems.includes(id)
+        ? prev.systems.filter((i) => i !== id)
+        : [...prev.systems, id],
     }));
   };
 
   const canNext = () => {
     switch (step) {
-      case 0: return formData.rooms.length > 0;
-      case 1: return formData.systems.length > 0;
-      case 2: return formData.projectType !== "";
-      case 3: return formData.budget !== "";
-      case 4: return formData.timeline !== "";
-      case 5: return formData.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+      case 0: return formData.spaceType !== "";
+      case 1: return formData.buildType !== "";
+      case 2: return formData.systems.length > 0;
+      case 3: return formData.timeline !== "";
+      case 4: return formData.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
       default: return true;
     }
   };
@@ -89,25 +92,24 @@ const PlanningWizard = () => {
       const { error } = await supabase.from("planning_submissions").insert({
         email: formData.email.trim(),
         name: formData.name.trim() || null,
-        rooms: formData.rooms,
+        rooms: [formData.spaceType, formData.buildType],
         systems: formData.systems,
-        project_type: formData.projectType,
-        budget_range: formData.budget,
+        project_type: `${SPACE_TYPES.find(s => s.id === formData.spaceType)?.label || formData.spaceType} – ${BUILD_TYPES.find(b => b.id === formData.buildType)?.label || formData.buildType}`,
+        budget_range: "N/A",
         timeline: formData.timeline,
         notes: formData.notes.trim() || null,
       });
       if (error) throw error;
 
-      // Try sending email (non-blocking)
       try {
         await supabase.functions.invoke("send-planning-email", {
           body: {
             email: formData.email.trim(),
             name: formData.name.trim(),
-            rooms: formData.rooms,
+            rooms: [formData.spaceType, formData.buildType],
             systems: formData.systems,
-            projectType: formData.projectType,
-            budget: formData.budget,
+            projectType: `${SPACE_TYPES.find(s => s.id === formData.spaceType)?.label} – ${BUILD_TYPES.find(b => b.id === formData.buildType)?.label}`,
+            budget: "N/A",
             timeline: formData.timeline,
             notes: formData.notes.trim(),
           },
@@ -141,31 +143,31 @@ const PlanningWizard = () => {
     );
   }
 
-  const renderStep = () => {
-    const variants = { initial: { opacity: 0, x: 30 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -30 } };
+  const variants = { initial: { opacity: 0, x: 30 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: -30 } };
 
+  const renderStep = () => {
     switch (step) {
       case 0:
         return (
-          <motion.div key="rooms" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Que divisões pretende equipar?</h2>
-            <p className="text-muted-foreground mb-8">Selecione todas as que se aplicam.</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {ROOMS.map((room) => {
-                const Icon = room.icon;
-                const selected = formData.rooms.includes(room.id);
+          <motion.div key="space" {...variants}>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">Qual é o tipo de espaço?</h2>
+            <p className="text-muted-foreground mb-8">Selecione o tipo de espaço para o seu projeto.</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl">
+              {SPACE_TYPES.map((type) => {
+                const Icon = type.icon;
+                const selected = formData.spaceType === type.id;
                 return (
                   <button
-                    key={room.id}
-                    onClick={() => toggleItem("rooms", room.id)}
-                    className={`p-6 rounded-lg border text-left transition-all duration-300 ${
+                    key={type.id}
+                    onClick={() => setFormData((p) => ({ ...p, spaceType: type.id }))}
+                    className={`p-8 rounded-lg border text-center transition-all duration-300 ${
                       selected
                         ? "border-primary bg-primary/10 text-foreground"
                         : "border-border bg-card hover:border-primary/50 text-muted-foreground"
                     }`}
                   >
-                    <Icon className={`w-6 h-6 mb-3 ${selected ? "text-primary" : ""}`} />
-                    <span className="text-sm font-body tracking-wide">{room.label}</span>
+                    <Icon className={`w-8 h-8 mb-4 mx-auto ${selected ? "text-primary" : ""}`} />
+                    <span className="text-sm font-body tracking-wide">{type.label}</span>
                   </button>
                 );
               })}
@@ -173,6 +175,31 @@ const PlanningWizard = () => {
           </motion.div>
         );
       case 1:
+        return (
+          <motion.div key="build" {...variants}>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">É uma construção nova ou uma renovação?</h2>
+            <p className="text-muted-foreground mb-8">Indique a natureza do seu projeto.</p>
+            <div className="flex flex-col gap-4 max-w-md">
+              {BUILD_TYPES.map((type) => {
+                const selected = formData.buildType === type.id;
+                return (
+                  <button
+                    key={type.id}
+                    onClick={() => setFormData((p) => ({ ...p, buildType: type.id }))}
+                    className={`p-5 rounded-lg border text-left transition-all duration-300 ${
+                      selected
+                        ? "border-primary bg-primary/10 text-foreground"
+                        : "border-border bg-card hover:border-primary/50 text-muted-foreground"
+                    }`}
+                  >
+                    <span className="text-sm font-body tracking-wide">{type.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        );
+      case 2:
         return (
           <motion.div key="systems" {...variants}>
             <h2 className="font-display text-3xl md:text-4xl mb-2">Que sistemas lhe interessam?</h2>
@@ -184,7 +211,7 @@ const PlanningWizard = () => {
                 return (
                   <button
                     key={sys.id}
-                    onClick={() => toggleItem("systems", sys.id)}
+                    onClick={() => toggleSystem(sys.id)}
                     className={`p-6 rounded-lg border text-left transition-all duration-300 ${
                       selected
                         ? "border-primary bg-primary/10 text-foreground"
@@ -199,54 +226,10 @@ const PlanningWizard = () => {
             </div>
           </motion.div>
         );
-      case 2:
-        return (
-          <motion.div key="project" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Tipo de projecto</h2>
-            <p className="text-muted-foreground mb-8">Qual a natureza do seu projecto?</p>
-            <div className="flex flex-col gap-4 max-w-md">
-              {PROJECT_TYPES.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setFormData((p) => ({ ...p, projectType: type }))}
-                  className={`p-5 rounded-lg border text-left transition-all duration-300 ${
-                    formData.projectType === type
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border bg-card hover:border-primary/50 text-muted-foreground"
-                  }`}
-                >
-                  <span className="text-sm font-body tracking-wide">{type}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        );
       case 3:
         return (
-          <motion.div key="budget" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Orçamento estimado</h2>
-            <p className="text-muted-foreground mb-8">Qual o intervalo de investimento previsto?</p>
-            <div className="flex flex-col gap-4 max-w-md">
-              {BUDGETS.map((b) => (
-                <button
-                  key={b}
-                  onClick={() => setFormData((p) => ({ ...p, budget: b }))}
-                  className={`p-5 rounded-lg border text-left transition-all duration-300 ${
-                    formData.budget === b
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border bg-card hover:border-primary/50 text-muted-foreground"
-                  }`}
-                >
-                  <span className="text-sm font-body tracking-wide">{b}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        );
-      case 4:
-        return (
           <motion.div key="timeline" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Quando pretende iniciar?</h2>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">Quando pretende iniciar o projeto?</h2>
             <p className="text-muted-foreground mb-8">Selecione o prazo ideal.</p>
             <div className="flex flex-col gap-4 max-w-md">
               {TIMELINES.map((t) => (
@@ -265,7 +248,7 @@ const PlanningWizard = () => {
             </div>
           </motion.div>
         );
-      case 5:
+      case 4:
         return (
           <motion.div key="contact" {...variants}>
             <h2 className="font-display text-3xl md:text-4xl mb-2">Os seus dados</h2>
@@ -306,15 +289,14 @@ const PlanningWizard = () => {
             </div>
           </motion.div>
         );
-      case 6:
+      case 5:
         return (
           <motion.div key="summary" {...variants}>
             <h2 className="font-display text-3xl md:text-4xl mb-8">Resumo do Planeamento</h2>
             <div className="grid md:grid-cols-2 gap-6 max-w-2xl">
-              <SummaryCard title="Divisões" items={formData.rooms.map((r) => ROOMS.find((x) => x.id === r)?.label || r)} />
+              <SummaryCard title="Tipo de Espaço" items={[SPACE_TYPES.find((x) => x.id === formData.spaceType)?.label || formData.spaceType]} />
+              <SummaryCard title="Tipo de Projeto" items={[BUILD_TYPES.find((x) => x.id === formData.buildType)?.label || formData.buildType]} />
               <SummaryCard title="Sistemas" items={formData.systems.map((s) => SYSTEMS.find((x) => x.id === s)?.label || s)} />
-              <SummaryCard title="Projecto" items={[formData.projectType]} />
-              <SummaryCard title="Orçamento" items={[formData.budget]} />
               <SummaryCard title="Cronograma" items={[formData.timeline]} />
               <SummaryCard title="Contacto" items={[formData.name || "—", formData.email]} />
               {formData.notes && <SummaryCard title="Notas" items={[formData.notes]} />}
@@ -328,7 +310,6 @@ const PlanningWizard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <div className="border-b border-border">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <a href="/" className="flex items-center">
@@ -340,7 +321,6 @@ const PlanningWizard = () => {
         </div>
       </div>
 
-      {/* Progress */}
       <div className="container mx-auto px-6 py-6">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs text-muted-foreground tracking-wider uppercase">{STEPS[step]}</span>
@@ -349,14 +329,12 @@ const PlanningWizard = () => {
         <Progress value={progress} className="h-1 bg-secondary" />
       </div>
 
-      {/* Step Content */}
       <div className="container mx-auto px-6 py-8 md:py-16">
         <AnimatePresence mode="wait">
           {renderStep()}
         </AnimatePresence>
       </div>
 
-      {/* Navigation */}
       <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur-md">
         <div className="container mx-auto px-6 py-4 flex justify-between">
           <Button
