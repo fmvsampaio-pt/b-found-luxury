@@ -35,11 +35,13 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-medium leading-tight mb-8"
+          className="font-display text-4xl md:text-6xl lg:text-7xl font-medium leading-tight mb-8"
         >
           <span className="text-gradient-gold">{t.hero.title1}</span>
           <br />
           {t.hero.title2}
+          <br />
+          <span className="text-gradient-gold">{t.hero.title3}</span>
         </motion.h1>
 
         <motion.p
