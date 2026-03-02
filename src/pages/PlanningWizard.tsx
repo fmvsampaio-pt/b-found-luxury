@@ -1,43 +1,27 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Home, Anchor, Building2, Music, Wifi, Shield, Lock, Film, Lightbulb, Speaker, Monitor, Settings, ChevronLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Home, Anchor, Building2, Music, Wifi, Shield, Lock, Film, Lightbulb, Speaker, Settings, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo-bfound.png";
 
-const SPACE_TYPES = [
-  { id: "residential", label: "Residência", icon: Home },
-  { id: "marine", label: "Barco / Iate", icon: Anchor },
-  { id: "commercial", label: "Espaço Comercial", icon: Building2 },
-];
+const SPACE_TYPE_IDS = ["residential", "marine", "commercial"] as const;
+const SPACE_TYPE_ICONS = { residential: Home, marine: Anchor, commercial: Building2 };
+const BUILD_TYPE_IDS = ["new-build", "renovation"] as const;
 
-const BUILD_TYPES = [
-  { id: "new-build", label: "Construção Nova" },
-  { id: "renovation", label: "Renovação" },
-];
-
-const SYSTEMS = [
-  { id: "home-automation", label: "Automação e Controlo", icon: Settings },
-  { id: "multiroom-audio", label: "Áudio Multiroom", icon: Music },
-  { id: "outdoor-audio", label: "Áudio Exterior", icon: Speaker },
-  { id: "hi-fi", label: "Hi‑Fi", icon: Speaker },
-  { id: "wifi-networking", label: "Wi‑Fi e Rede", icon: Wifi },
-  { id: "cctv-security", label: "CCTV / Segurança", icon: Shield },
-  { id: "access-control", label: "Controlo de Acessos", icon: Lock },
-  { id: "home-cinema", label: "Home Cinema", icon: Film },
-  { id: "lighting-control", label: "Controlo de Iluminação", icon: Lightbulb },
-];
-
-const TIMELINES = [
-  "Nos próximos 3 meses",
-  "Dentro de 3 a 6 meses",
-  "Sem data definida / Em fase de planeamento",
-];
-
-const STEPS = ["Espaço", "Tipo", "Sistemas", "Cronograma", "Dados", "Resumo"];
+const SYSTEM_IDS = [
+  "home-automation", "multiroom-audio", "outdoor-audio", "hi-fi",
+  "wifi-networking", "cctv-security", "access-control", "home-cinema", "lighting-control",
+] as const;
+const SYSTEM_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  "home-automation": Settings, "multiroom-audio": Music, "outdoor-audio": Speaker,
+  "hi-fi": Speaker, "wifi-networking": Wifi, "cctv-security": Shield,
+  "access-control": Lock, "home-cinema": Film, "lighting-control": Lightbulb,
+};
 
 type FormData = {
   spaceType: string;
@@ -51,27 +35,21 @@ type FormData = {
 
 const PlanningWizard = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  const w = t.wizard;
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    spaceType: "",
-    buildType: "",
-    systems: [],
-    timeline: "",
-    name: "",
-    email: "",
-    notes: "",
+    spaceType: "", buildType: "", systems: [], timeline: "", name: "", email: "", notes: "",
   });
 
-  const progress = ((step + 1) / STEPS.length) * 100;
+  const progress = ((step + 1) / w.steps.length) * 100;
 
   const toggleSystem = (id: string) => {
     setFormData((prev) => ({
       ...prev,
-      systems: prev.systems.includes(id)
-        ? prev.systems.filter((i) => i !== id)
-        : [...prev.systems, id],
+      systems: prev.systems.includes(id) ? prev.systems.filter((i) => i !== id) : [...prev.systems, id],
     }));
   };
 
@@ -86,6 +64,10 @@ const PlanningWizard = () => {
     }
   };
 
+  const getSpaceLabel = (id: string) => (w.spaceTypes as Record<string, string>)[id] || id;
+  const getBuildLabel = (id: string) => (w.buildTypes as Record<string, string>)[id] || id;
+  const getSystemLabel = (id: string) => (w.systems as Record<string, string>)[id] || id;
+
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
@@ -94,7 +76,7 @@ const PlanningWizard = () => {
         name: formData.name.trim() || null,
         rooms: [formData.spaceType, formData.buildType],
         systems: formData.systems,
-        project_type: `${SPACE_TYPES.find(s => s.id === formData.spaceType)?.label || formData.spaceType} – ${BUILD_TYPES.find(b => b.id === formData.buildType)?.label || formData.buildType}`,
+        project_type: `${getSpaceLabel(formData.spaceType)} – ${getBuildLabel(formData.buildType)}`,
         budget_range: "N/A",
         timeline: formData.timeline,
         notes: formData.notes.trim() || null,
@@ -108,7 +90,7 @@ const PlanningWizard = () => {
             name: formData.name.trim(),
             rooms: [formData.spaceType, formData.buildType],
             systems: formData.systems,
-            projectType: `${SPACE_TYPES.find(s => s.id === formData.spaceType)?.label} – ${BUILD_TYPES.find(b => b.id === formData.buildType)?.label}`,
+            projectType: `${getSpaceLabel(formData.spaceType)} – ${getBuildLabel(formData.buildType)}`,
             budget: "N/A",
             timeline: formData.timeline,
             notes: formData.notes.trim(),
@@ -119,7 +101,7 @@ const PlanningWizard = () => {
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      alert("Ocorreu um erro. Por favor tente novamente.");
+      alert(w.errorMsg);
     } finally {
       setSubmitting(false);
     }
@@ -132,11 +114,11 @@ const PlanningWizard = () => {
           <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-8">
             <Check className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="font-display text-4xl mb-4">Obrigado!</h1>
-          <p className="text-muted-foreground mb-2">O seu pedido de orçamento foi enviado com sucesso.</p>
-          <p className="text-muted-foreground mb-8">Entraremos em contacto brevemente com uma proposta detalhada.</p>
+          <h1 className="font-display text-4xl mb-4">{w.thankYou}</h1>
+          <p className="text-muted-foreground mb-2">{w.thankYouP1}</p>
+          <p className="text-muted-foreground mb-8">{w.thankYouP2}</p>
           <Button onClick={() => navigate("/")} variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-            Voltar ao Site
+            {w.backToHome}
           </Button>
         </motion.div>
       </div>
@@ -150,24 +132,17 @@ const PlanningWizard = () => {
       case 0:
         return (
           <motion.div key="space" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Qual é o tipo de espaço?</h2>
-            <p className="text-muted-foreground mb-8">Selecione o tipo de espaço para o seu projeto.</p>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">{w.step0.title}</h2>
+            <p className="text-muted-foreground mb-8">{w.step0.subtitle}</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl">
-              {SPACE_TYPES.map((type) => {
-                const Icon = type.icon;
-                const selected = formData.spaceType === type.id;
+              {SPACE_TYPE_IDS.map((id) => {
+                const Icon = SPACE_TYPE_ICONS[id];
+                const selected = formData.spaceType === id;
                 return (
-                  <button
-                    key={type.id}
-                    onClick={() => setFormData((p) => ({ ...p, spaceType: type.id }))}
-                    className={`p-8 rounded-lg border text-center transition-all duration-300 ${
-                      selected
-                        ? "border-primary bg-primary/10 text-foreground"
-                        : "border-border bg-card hover:border-primary/50 text-muted-foreground"
-                    }`}
-                  >
+                  <button key={id} onClick={() => setFormData((p) => ({ ...p, spaceType: id }))}
+                    className={`p-8 rounded-lg border text-center transition-all duration-300 ${selected ? "border-primary bg-primary/10 text-foreground" : "border-border bg-card hover:border-primary/50 text-muted-foreground"}`}>
                     <Icon className={`w-8 h-8 mb-4 mx-auto ${selected ? "text-primary" : ""}`} />
-                    <span className="text-sm font-body tracking-wide">{type.label}</span>
+                    <span className="text-sm font-body tracking-wide">{getSpaceLabel(id)}</span>
                   </button>
                 );
               })}
@@ -177,22 +152,15 @@ const PlanningWizard = () => {
       case 1:
         return (
           <motion.div key="build" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">É uma construção nova ou uma renovação?</h2>
-            <p className="text-muted-foreground mb-8">Indique a natureza do seu projeto.</p>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">{w.step1.title}</h2>
+            <p className="text-muted-foreground mb-8">{w.step1.subtitle}</p>
             <div className="flex flex-col gap-4 max-w-md">
-              {BUILD_TYPES.map((type) => {
-                const selected = formData.buildType === type.id;
+              {BUILD_TYPE_IDS.map((id) => {
+                const selected = formData.buildType === id;
                 return (
-                  <button
-                    key={type.id}
-                    onClick={() => setFormData((p) => ({ ...p, buildType: type.id }))}
-                    className={`p-5 rounded-lg border text-left transition-all duration-300 ${
-                      selected
-                        ? "border-primary bg-primary/10 text-foreground"
-                        : "border-border bg-card hover:border-primary/50 text-muted-foreground"
-                    }`}
-                  >
-                    <span className="text-sm font-body tracking-wide">{type.label}</span>
+                  <button key={id} onClick={() => setFormData((p) => ({ ...p, buildType: id }))}
+                    className={`p-5 rounded-lg border text-left transition-all duration-300 ${selected ? "border-primary bg-primary/10 text-foreground" : "border-border bg-card hover:border-primary/50 text-muted-foreground"}`}>
+                    <span className="text-sm font-body tracking-wide">{getBuildLabel(id)}</span>
                   </button>
                 );
               })}
@@ -202,24 +170,17 @@ const PlanningWizard = () => {
       case 2:
         return (
           <motion.div key="systems" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Que sistemas lhe interessam?</h2>
-            <p className="text-muted-foreground mb-8">Selecione todos os que pretende.</p>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">{w.step2.title}</h2>
+            <p className="text-muted-foreground mb-8">{w.step2.subtitle}</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {SYSTEMS.map((sys) => {
-                const Icon = sys.icon;
-                const selected = formData.systems.includes(sys.id);
+              {SYSTEM_IDS.map((id) => {
+                const Icon = SYSTEM_ICONS[id];
+                const selected = formData.systems.includes(id);
                 return (
-                  <button
-                    key={sys.id}
-                    onClick={() => toggleSystem(sys.id)}
-                    className={`p-6 rounded-lg border text-left transition-all duration-300 ${
-                      selected
-                        ? "border-primary bg-primary/10 text-foreground"
-                        : "border-border bg-card hover:border-primary/50 text-muted-foreground"
-                    }`}
-                  >
+                  <button key={id} onClick={() => toggleSystem(id)}
+                    className={`p-6 rounded-lg border text-left transition-all duration-300 ${selected ? "border-primary bg-primary/10 text-foreground" : "border-border bg-card hover:border-primary/50 text-muted-foreground"}`}>
                     <Icon className={`w-6 h-6 mb-3 ${selected ? "text-primary" : ""}`} />
-                    <span className="text-sm font-body tracking-wide">{sys.label}</span>
+                    <span className="text-sm font-body tracking-wide">{getSystemLabel(id)}</span>
                   </button>
                 );
               })}
@@ -229,19 +190,12 @@ const PlanningWizard = () => {
       case 3:
         return (
           <motion.div key="timeline" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Quando pretende iniciar o projeto?</h2>
-            <p className="text-muted-foreground mb-8">Selecione o prazo ideal.</p>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">{w.step3.title}</h2>
+            <p className="text-muted-foreground mb-8">{w.step3.subtitle}</p>
             <div className="flex flex-col gap-4 max-w-md">
-              {TIMELINES.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setFormData((p) => ({ ...p, timeline: t }))}
-                  className={`p-5 rounded-lg border text-left transition-all duration-300 ${
-                    formData.timeline === t
-                      ? "border-primary bg-primary/10 text-foreground"
-                      : "border-border bg-card hover:border-primary/50 text-muted-foreground"
-                  }`}
-                >
+              {w.timelines.map((t) => (
+                <button key={t} onClick={() => setFormData((p) => ({ ...p, timeline: t }))}
+                  className={`p-5 rounded-lg border text-left transition-all duration-300 ${formData.timeline === t ? "border-primary bg-primary/10 text-foreground" : "border-border bg-card hover:border-primary/50 text-muted-foreground"}`}>
                   <span className="text-sm font-body tracking-wide">{t}</span>
                 </button>
               ))}
@@ -251,40 +205,21 @@ const PlanningWizard = () => {
       case 4:
         return (
           <motion.div key="contact" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-2">Os seus dados</h2>
-            <p className="text-muted-foreground mb-8">Para recebermos o seu pedido e enviar-lhe a proposta.</p>
+            <h2 className="font-display text-3xl md:text-4xl mb-2">{w.step4.title}</h2>
+            <p className="text-muted-foreground mb-8">{w.step4.subtitle}</p>
             <div className="flex flex-col gap-5 max-w-md">
               <div>
-                <label className="text-sm text-muted-foreground mb-1.5 block">Nome (opcional)</label>
-                <Input
-                  value={formData.name}
-                  onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-                  placeholder="O seu nome"
-                  className="bg-card border-border"
-                  maxLength={100}
-                />
+                <label className="text-sm text-muted-foreground mb-1.5 block">{w.step4.nameLabel}</label>
+                <Input value={formData.name} onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))} placeholder={w.step4.namePlaceholder} className="bg-card border-border" maxLength={100} />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-1.5 block">Email *</label>
-                <Input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                  placeholder="email@exemplo.com"
-                  className="bg-card border-border"
-                  maxLength={255}
-                  required
-                />
+                <label className="text-sm text-muted-foreground mb-1.5 block">{w.step4.emailLabel}</label>
+                <Input type="email" value={formData.email} onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))} placeholder={w.step4.emailPlaceholder} className="bg-card border-border" maxLength={255} required />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-1.5 block">Notas adicionais (opcional)</label>
-                <textarea
-                  value={formData.notes}
-                  onChange={(e) => setFormData((p) => ({ ...p, notes: e.target.value }))}
-                  placeholder="Detalhes extra sobre o seu projecto..."
-                  className="flex w-full rounded-md border border-border bg-card px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[100px] md:text-sm"
-                  maxLength={1000}
-                />
+                <label className="text-sm text-muted-foreground mb-1.5 block">{w.step4.notesLabel}</label>
+                <textarea value={formData.notes} onChange={(e) => setFormData((p) => ({ ...p, notes: e.target.value }))} placeholder={w.step4.notesPlaceholder}
+                  className="flex w-full rounded-md border border-border bg-card px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[100px] md:text-sm" maxLength={1000} />
               </div>
             </div>
           </motion.div>
@@ -292,19 +227,18 @@ const PlanningWizard = () => {
       case 5:
         return (
           <motion.div key="summary" {...variants}>
-            <h2 className="font-display text-3xl md:text-4xl mb-8">Resumo do Planeamento</h2>
+            <h2 className="font-display text-3xl md:text-4xl mb-8">{w.step5.title}</h2>
             <div className="grid md:grid-cols-2 gap-6 max-w-2xl">
-              <SummaryCard title="Tipo de Espaço" items={[SPACE_TYPES.find((x) => x.id === formData.spaceType)?.label || formData.spaceType]} />
-              <SummaryCard title="Tipo de Projeto" items={[BUILD_TYPES.find((x) => x.id === formData.buildType)?.label || formData.buildType]} />
-              <SummaryCard title="Sistemas" items={formData.systems.map((s) => SYSTEMS.find((x) => x.id === s)?.label || s)} />
-              <SummaryCard title="Cronograma" items={[formData.timeline]} />
-              <SummaryCard title="Contacto" items={[formData.name || "—", formData.email]} />
-              {formData.notes && <SummaryCard title="Notas" items={[formData.notes]} />}
+              <SummaryCard title={w.summaryLabels.spaceType} items={[getSpaceLabel(formData.spaceType)]} />
+              <SummaryCard title={w.summaryLabels.buildType} items={[getBuildLabel(formData.buildType)]} />
+              <SummaryCard title={w.summaryLabels.systems} items={formData.systems.map(getSystemLabel)} />
+              <SummaryCard title={w.summaryLabels.timeline} items={[formData.timeline]} />
+              <SummaryCard title={w.summaryLabels.contact} items={[formData.name || "—", formData.email]} />
+              {formData.notes && <SummaryCard title={w.summaryLabels.notes} items={[formData.notes]} />}
             </div>
           </motion.div>
         );
-      default:
-        return null;
+      default: return null;
     }
   };
 
@@ -316,51 +250,35 @@ const PlanningWizard = () => {
             <img src={logo} alt="B-Found" className="h-10 w-auto" />
           </a>
           <button onClick={() => navigate("/")} className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-            <ChevronLeft className="w-4 h-4" /> Voltar ao site
+            <ChevronLeft className="w-4 h-4" /> {w.backToSite}
           </button>
         </div>
       </div>
 
       <div className="container mx-auto px-6 py-6">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs text-muted-foreground tracking-wider uppercase">{STEPS[step]}</span>
-          <span className="text-xs text-muted-foreground">{step + 1} / {STEPS.length}</span>
+          <span className="text-xs text-muted-foreground tracking-wider uppercase">{w.steps[step]}</span>
+          <span className="text-xs text-muted-foreground">{step + 1} / {w.steps.length}</span>
         </div>
         <Progress value={progress} className="h-1 bg-secondary" />
       </div>
 
       <div className="container mx-auto px-6 py-8 md:py-16">
-        <AnimatePresence mode="wait">
-          {renderStep()}
-        </AnimatePresence>
+        <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur-md">
         <div className="container mx-auto px-6 py-4 flex justify-between">
-          <Button
-            variant="ghost"
-            onClick={() => setStep((s) => s - 1)}
-            disabled={step === 0}
-            className="text-muted-foreground"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Anterior
+          <Button variant="ghost" onClick={() => setStep((s) => s - 1)} disabled={step === 0} className="text-muted-foreground">
+            <ArrowLeft className="w-4 h-4 mr-2" /> {w.prev}
           </Button>
-
-          {step < STEPS.length - 1 ? (
-            <Button
-              onClick={() => setStep((s) => s + 1)}
-              disabled={!canNext()}
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              Seguinte <ArrowRight className="w-4 h-4 ml-2" />
+          {step < w.steps.length - 1 ? (
+            <Button onClick={() => setStep((s) => s + 1)} disabled={!canNext()} className="bg-primary text-primary-foreground hover:bg-primary/90">
+              {w.next} <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           ) : (
-            <Button
-              onClick={handleSubmit}
-              disabled={submitting}
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              {submitting ? "A enviar..." : "Enviar Pedido"} <Check className="w-4 h-4 ml-2" />
+            <Button onClick={handleSubmit} disabled={submitting} className="bg-primary text-primary-foreground hover:bg-primary/90">
+              {submitting ? w.submitting : w.submit} <Check className="w-4 h-4 ml-2" />
             </Button>
           )}
         </div>
