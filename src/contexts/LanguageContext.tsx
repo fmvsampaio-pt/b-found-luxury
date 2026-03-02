@@ -12,10 +12,10 @@ export const translations = {
       contact: "Contacto",
     },
     hero: {
-      tagline: "Soluções Premium & Luxo",
-      title1: "Entretenimento",
-      title2: "Integrado",
-      description: "Soluções de entretenimento integrado para o mercado residencial premium e de luxo. Desde 2009.",
+      tagline: "Integração Completa de Sistemas",
+      title1: "Residenciais e",
+      title2: "Comerciais",
+      description: "Projetamos e instalamos soluções de automação, AV, iluminação, rede e segurança que funcionam em perfeita harmonia para elevar o seu estilo de vida ou melhorar os seus negócios.",
       cta: "Descobrir Mais",
     },
     about: {
@@ -93,10 +93,10 @@ export const translations = {
       contact: "Contact",
     },
     hero: {
-      tagline: "Premium & Luxury Solutions",
-      title1: "Integrated",
-      title2: "Entertainment",
-      description: "Integrated entertainment solutions for the premium and luxury residential market. Since 2009.",
+      tagline: "Complete Systems Integration",
+      title1: "Residential &",
+      title2: "Commercial",
+      description: "We design and install automation, AV, lighting, networking, and security solutions that work in perfect harmony to elevate your lifestyle or enhance your business.",
       cta: "Discover More",
     },
     about: {
