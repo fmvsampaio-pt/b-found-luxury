@@ -13,9 +13,9 @@ export const translations = {
     },
     hero: {
       tagline: "Soluções Premium & Luxo",
-      title1: "Tecnologia Invisível.",
+      title1: "Tecnologia Invisível. Experiências Memoráveis.",
       title2: "",
-      title3: "Experiências Memoráveis.",
+      title3: "",
       description: "Projetamos e instalamos soluções de automação, AV, iluminação, rede e segurança que funcionam em perfeita harmonia para elevar o seu estilo de vida ou melhorar os seus negócios.",
       cta: "Descobrir Mais",
     },
@@ -119,9 +119,9 @@ export const translations = {
     },
     hero: {
       tagline: "Premium & Luxury Solutions",
-      title1: "Invisible Technology.",
+      title1: "Invisible Technology. Memorable Experiences.",
       title2: "",
-      title3: "Memorable Experiences.",
+      title3: "",
       description: "We design and install automation, AV, lighting, networking, and security solutions that work in perfect harmony to elevate your lifestyle or enhance your business.",
       cta: "Discover More",
     },
