@@ -39,8 +39,7 @@ const HeroSection = () => {
         >
           <span className="text-gradient-gold">{t.hero.title1}</span>
           <br />
-          {t.hero.title2}
-          <br />
+          {t.hero.title2 && <>{t.hero.title2}<br /></>}
           <span className="text-gradient-gold">{t.hero.title3}</span>
         </motion.h1>
 
