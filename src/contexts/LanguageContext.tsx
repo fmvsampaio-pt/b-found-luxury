@@ -43,11 +43,11 @@ export const translations = {
         },
         commercial: {
           title: "Soluções Comerciais",
-          services: ["Consultoria IT", "Infraestrutura de Rede", "Soluções AV", "Automação", "Segurança", "Suporte Técnico"],
+          services: ["Consultoria IT", "Infraestrutura de Rede", "Soluções AV", "Automação e Controlo", "Segurança", "Suporte Técnico"],
         },
         marine: {
           title: "Soluções Marítimas",
-          services: ["Redes & Wi-Fi", "Automação", "Áudio", "Cinema", "Segurança"],
+          services: ["Redes & Wi-Fi", "Automação e Controlo", "Áudio", "Cinema", "Segurança"],
         },
       },
     },
@@ -149,11 +149,11 @@ export const translations = {
         },
         commercial: {
           title: "Commercial Solutions",
-          services: ["IT Consulting", "Network Infrastructure", "AV Solutions", "Automation", "Security", "Technical Support"],
+          services: ["IT Consulting", "Network Infrastructure", "AV Solutions", "Automation & Control", "Security", "Technical Support"],
         },
         marine: {
           title: "Marine Solutions",
-          services: ["Networks & Wi-Fi", "Automation", "Audio", "Cinema", "Security"],
+          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Cinema", "Security"],
         },
       },
     },
