@@ -12,6 +12,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { CookieConsentProvider } from "./contexts/CookieConsentContext";
 import CookieConsent from "./components/CookieConsent";
 
+
 const queryClient = new QueryClient();
 
 const App = () => (
