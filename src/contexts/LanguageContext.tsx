@@ -13,7 +13,7 @@ export const translations = {
     },
     hero: {
       tagline: "Soluções Premium & Luxo",
-      title1: "Tecnologia Invisível. Experiências Memoráveis.",
+      title1: "Tecnologia Invisível Experiências Memoráveis.",
       title2: "",
       title3: "",
       description: "Projetamos e instalamos soluções de automação, AV, iluminação, rede e segurança que funcionam em perfeita harmonia para elevar o seu estilo de vida ou melhorar os seus negócios.",
