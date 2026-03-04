@@ -47,7 +47,7 @@ export const translations = {
         },
         marine: {
           title: "Soluções Marítimas",
-          services: ["Redes & Wi-Fi", "Automação", "Áudio", "Cinema", "Segurança"],
+          services: ["Redes & Wi-Fi", "Automação e Controlo", "Áudio", "Cinema", "Segurança"],
         },
       },
     },
