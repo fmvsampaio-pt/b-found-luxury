@@ -38,8 +38,6 @@ const HeroSection = () => {
           className="font-display text-4xl md:text-6xl lg:text-7xl font-medium leading-tight mb-8"
         >
           <span className="text-gradient-gold">{t.hero.title1}</span>
-          {" "}
-          <span className="text-gradient-gold">{t.hero.title3}</span>
         </motion.h1>
 
         <motion.p
