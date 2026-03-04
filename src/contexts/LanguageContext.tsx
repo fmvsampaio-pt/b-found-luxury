@@ -13,9 +13,9 @@ export const translations = {
     },
     hero: {
       tagline: "Soluções Premium & Luxo",
-      title1: "Integração Completa",
-      title2: "de Sistemas",
-      title3: "Residenciais e Comerciais",
+      title1: "Tecnologia Invisível.",
+      title2: "",
+      title3: "Experiências Memoráveis.",
       description: "Projetamos e instalamos soluções de automação, AV, iluminação, rede e segurança que funcionam em perfeita harmonia para elevar o seu estilo de vida ou melhorar os seus negócios.",
       cta: "Descobrir Mais",
     },
