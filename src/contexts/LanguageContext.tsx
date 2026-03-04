@@ -153,7 +153,7 @@ export const translations = {
         },
         marine: {
           title: "Marine Solutions",
-          services: ["Networks & Wi-Fi", "Automation", "Audio", "Cinema", "Security"],
+          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Cinema", "Security"],
         },
       },
     },
