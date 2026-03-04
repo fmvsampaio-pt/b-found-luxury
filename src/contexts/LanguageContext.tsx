@@ -149,7 +149,7 @@ export const translations = {
         },
         commercial: {
           title: "Commercial Solutions",
-          services: ["IT Consulting", "Network Infrastructure", "AV Solutions", "Automation", "Security", "Technical Support"],
+          services: ["IT Consulting", "Network Infrastructure", "AV Solutions", "Automation & Control", "Security", "Technical Support"],
         },
         marine: {
           title: "Marine Solutions",
