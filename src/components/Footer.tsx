@@ -11,7 +11,14 @@ const Footer = () => {
   return (
     <footer className="py-10 border-t border-border bg-luxury-gradient-alt">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        <a href="#" className="flex items-center">
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="flex items-center"
+        >
           <img src={logo} alt="B-Found" className="h-12 w-auto" />
         </a>
 
