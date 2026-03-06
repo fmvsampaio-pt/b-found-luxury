@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Menu } from "lucide-react";
 import logo from "@/assets/logo-bfound.png";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
