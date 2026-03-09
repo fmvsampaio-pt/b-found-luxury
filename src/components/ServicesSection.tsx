@@ -37,7 +37,7 @@ const ServicesSection = () => {
   const current = categories.find((c) => c.id === active)!;
 
   return (
-    <section id="services" className="py-28 md:py-32 relative scroll-mt-24">
+    <section id="services" className="py-16 md:py-20 relative scroll-mt-24">
       <div className="absolute inset-0 bg-luxury-radial pointer-events-none opacity-40" />
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
         <motion.div
