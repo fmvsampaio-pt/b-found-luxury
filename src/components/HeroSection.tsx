@@ -6,7 +6,7 @@ const HeroSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-28">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
