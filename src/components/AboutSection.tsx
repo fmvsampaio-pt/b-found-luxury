@@ -16,7 +16,7 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="pt-24 md:pt-32 pb-16 md:pb-20 bg-luxury-gradient scroll-mt-24">
+    <section id="about" className="py-16 md:py-20 bg-luxury-gradient scroll-mt-24">
       <div className="container mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
