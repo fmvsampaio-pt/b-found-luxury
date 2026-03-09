@@ -39,7 +39,7 @@ export const translations = {
       categories: {
         residential: {
           title: "Soluções Residenciais",
-          services: ["Redes & Wi-Fi", "Áudio Multiroom", "Hi-Fi Audio", "Automação e Controlo", "Home Theater", "Segurança", "Controlo de Acessos"],
+          services: ["Rede & Wi-Fi", "Áudio Multiroom", "Hi-Fi Audio", "Automação e Controlo", "Home Theater", "Segurança", "Controlo de Acessos"],
         },
         commercial: {
           title: "Soluções Comerciais",
