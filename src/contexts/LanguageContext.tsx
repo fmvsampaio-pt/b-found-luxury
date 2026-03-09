@@ -16,7 +16,7 @@ export const translations = {
       title1: "Tecnologia Invisível Experiências Memoráveis",
       title2: "",
       title3: "",
-      description: "Projetamos e instalamos soluções de automação, AV, iluminação, rede e segurança que funcionam em perfeita harmonia para elevar o seu estilo de vida ou melhorar os seus negócios.",
+      description: "Projetamos e instalamos soluções de controlo e automação, áudio‑vídeo, rede e segurança que funcionam em perfeita harmonia. Somos especialistas em home cinemas de referência, criando ambientes imersivos que elevam o seu estilo de vida e valorizam o seu espaço.",
       cta: "Descobrir Mais",
     },
     about: {
