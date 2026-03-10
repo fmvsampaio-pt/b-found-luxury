@@ -145,7 +145,7 @@ export const translations = {
       categories: {
         residential: {
           title: "Residential Solutions",
-          services: ["Networks & Wi-Fi", "Multiroom Audio", "Hi-Fi Audio", "Automation & Control", "Home Theater", "Security", "Access Control"],
+          services: ["Networks & Wi-Fi", "Multiroom Audio", "Hi-Fi Audio", "Automation & Control", "Home Cinema", "Media Rooms", "Security", "Technical Support"],
         },
         commercial: {
           title: "Commercial Solutions",
@@ -153,7 +153,7 @@ export const translations = {
         },
         marine: {
           title: "Marine Solutions",
-          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Cinema", "Security"],
+          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Home Cinema", "Media Rooms", "Security", "Technical Support"],
         },
       },
     },
