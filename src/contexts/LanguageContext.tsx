@@ -39,7 +39,7 @@ export const translations = {
       categories: {
         residential: {
           title: "Soluções Residenciais",
-          services: ["Rede & Wi-Fi", "Áudio Multiroom", "Hi-Fi Audio", "Automação e Controlo", "Home Theater", "Segurança", "Controlo de Acessos"],
+          services: ["Rede & Wi-Fi", "Áudio Multiroom", "Hi-Fi Audio", "Automação e Controlo", "Home Cinema", "Media Rooms", "Segurança", "Suporte Técnico"],
         },
         commercial: {
           title: "Soluções Comerciais",
@@ -47,7 +47,7 @@ export const translations = {
         },
         marine: {
           title: "Soluções Marítimas",
-          services: ["Rede & Wi-Fi", "Automação e Controlo", "Áudio", "Cinema", "Segurança"],
+          services: ["Rede & Wi-Fi", "Automação e Controlo", "Áudio", "Home Cinema", "Media Rooms", "Segurança", "Suporte Técnico"],
         },
       },
     },
@@ -145,7 +145,7 @@ export const translations = {
       categories: {
         residential: {
           title: "Residential Solutions",
-          services: ["Networks & Wi-Fi", "Multiroom Audio", "Hi-Fi Audio", "Automation & Control", "Home Theater", "Security", "Access Control"],
+          services: ["Networks & Wi-Fi", "Multiroom Audio", "Hi-Fi Audio", "Automation & Control", "Home Cinema", "Media Rooms", "Security", "Technical Support"],
         },
         commercial: {
           title: "Commercial Solutions",
@@ -153,7 +153,7 @@ export const translations = {
         },
         marine: {
           title: "Marine Solutions",
-          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Cinema", "Security"],
+          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Home Cinema", "Media Rooms", "Security", "Technical Support"],
         },
       },
     },
