@@ -1,6 +1,6 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { Wifi, Music, Home, Shield, Monitor, Film, Lock, Headphones, Server, Settings, Wrench, Anchor } from "lucide-react";
+import { Wifi, Music, Home, Shield, Monitor, Film, Lock, Headphones, Server, Settings, Wrench, Anchor, ChevronDown } from "lucide-react";
 import residentialImg from "@/assets/residential.jpg";
 import commercialImg from "@/assets/commercial.jpg";
 import marineImg from "@/assets/marine.jpg";
@@ -23,18 +23,24 @@ const ServicesSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const { t } = useLanguage();
   const [active, setActive] = useState<"residential" | "commercial" | "marine">("residential");
+  const [expandedService, setExpandedService] = useState<string | null>(null);
 
   const categories = (["residential", "commercial", "marine"] as const).map((id) => ({
     id,
     title: t.services.categories[id].title,
     image: categoryImages[id],
-    services: t.services.categories[id].services.map((name, i) => ({
+    services: t.services.categories[id].services.map((s, i) => ({
       icon: categoryIcons[id][i],
-      name,
+      name: s.name,
+      desc: s.desc,
     })),
   }));
 
   const current = categories.find((c) => c.id === active)!;
+
+  const toggleService = (name: string) => {
+    setExpandedService(expandedService === name ? null : name);
+  };
 
   return (
     <section id="services" className="py-16 md:py-20 relative scroll-mt-24">
@@ -55,7 +61,6 @@ const ServicesSection = () => {
           </h2>
         </motion.div>
 
-        {/* Category tabs */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -65,7 +70,7 @@ const ServicesSection = () => {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setActive(cat.id)}
+              onClick={() => { setActive(cat.id); setExpandedService(null); }}
               className={`text-sm tracking-[0.15em] uppercase font-body px-6 py-3 border transition-all duration-500 ${
                 active === cat.id
                   ? "border-primary text-primary bg-primary/5"
@@ -77,7 +82,6 @@ const ServicesSection = () => {
           ))}
         </motion.div>
 
-        {/* Content */}
         <motion.div
           key={active}
           initial={{ opacity: 0, y: 20 }}
@@ -105,12 +109,31 @@ const ServicesSection = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="flex items-center gap-3 p-3 border border-border hover:border-primary/40 transition-colors duration-300 group/item"
+                  className="border border-border hover:border-primary/40 transition-colors duration-300 group/item cursor-pointer"
+                  onClick={() => toggleService(service.name)}
                 >
-                  <service.icon className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-sm tracking-wide text-muted-foreground group-hover/item:text-foreground transition-colors">
-                    {service.name}
-                  </span>
+                  <div className="flex items-center gap-3 p-3">
+                    <service.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span className="text-sm tracking-wide text-muted-foreground group-hover/item:text-foreground transition-colors flex-1">
+                      {service.name}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${expandedService === service.name ? "rotate-180" : ""}`} />
+                  </div>
+                  <AnimatePresence>
+                    {expandedService === service.name && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="px-3 pb-3 text-xs text-muted-foreground leading-relaxed border-t border-border/50 pt-2">
+                          {service.desc}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               ))}
             </div>
