@@ -169,15 +169,39 @@ export const translations = {
       categories: {
         residential: {
           title: "Residential Solutions",
-          services: ["Networks & Wi-Fi", "Multiroom Audio", "Hi-Fi Audio", "Automation & Control", "Home Cinema", "Media Rooms", "Security", "Technical Support"],
+          services: [
+            { name: "Networks & Wi-Fi", desc: "Robust network infrastructure and full Wi-Fi coverage throughout your home." },
+            { name: "Multiroom Audio", desc: "Music in every room, centrally or independently controlled." },
+            { name: "Hi-Fi Audio", desc: "High-fidelity audio systems for the most demanding audiophiles." },
+            { name: "Automation & Control", desc: "Centralised control of lighting, climate, blinds and more." },
+            { name: "Home Cinema", desc: "Private cinema rooms with projection, immersive sound and optimised acoustics." },
+            { name: "Media Rooms", desc: "Versatile multimedia spaces for entertainment and family gatherings." },
+            { name: "Security", desc: "Video surveillance, alarms and remote monitoring systems." },
+            { name: "Technical Support", desc: "Ongoing technical assistance, preventive maintenance and remote support." },
+          ],
         },
         commercial: {
           title: "Commercial Solutions",
-          services: ["IT Consulting", "Network Infrastructure", "AV Solutions", "Automation & Control", "Security", "Technical Support"],
+          services: [
+            { name: "IT Consulting", desc: "Analysis and planning of enterprise technology infrastructure." },
+            { name: "Network Infrastructure", desc: "High-performance enterprise networks and professional Wi-Fi coverage." },
+            { name: "AV Solutions", desc: "Audiovisual equipment for meeting rooms and corporate spaces." },
+            { name: "Automation & Control", desc: "Intelligent management of lighting, climate and building access." },
+            { name: "Security", desc: "Video surveillance, access control and alarm systems." },
+            { name: "Technical Support", desc: "Dedicated maintenance and technical support for your business." },
+          ],
         },
         marine: {
           title: "Marine Solutions",
-          services: ["Networks & Wi-Fi", "Automation & Control", "Audio", "Home Cinema", "Media Rooms", "Security", "Technical Support"],
+          services: [
+            { name: "Networks & Wi-Fi", desc: "Stable and secure connectivity on board, even at sea." },
+            { name: "Automation & Control", desc: "Integrated control of onboard systems, lighting and climate." },
+            { name: "Audio", desc: "High-quality sound systems for interior and exterior areas." },
+            { name: "Home Cinema", desc: "Immersive cinematic experience adapted to the marine environment." },
+            { name: "Media Rooms", desc: "Onboard multimedia entertainment spaces." },
+            { name: "Security", desc: "Surveillance and security systems adapted to the nautical environment." },
+            { name: "Technical Support", desc: "Specialised technical assistance for vessels." },
+          ],
         },
       },
     },
