@@ -39,15 +39,39 @@ export const translations = {
       categories: {
         residential: {
           title: "Soluções Residenciais",
-          services: ["Rede & Wi-Fi", "Áudio Multiroom", "Hi-Fi Audio", "Automação e Controlo", "Home Cinema", "Media Rooms", "Segurança", "Suporte Técnico"],
+          services: [
+            { name: "Rede & Wi-Fi", desc: "Infraestrutura de rede robusta e cobertura Wi-Fi total em toda a habitação." },
+            { name: "Áudio Multiroom", desc: "Música em qualquer divisão, controlada de forma centralizada ou independente." },
+            { name: "Hi-Fi Audio", desc: "Sistemas de áudio de alta fidelidade para os mais exigentes audiófilos." },
+            { name: "Automação e Controlo", desc: "Controlo centralizado de iluminação, climatização, estores e muito mais." },
+            { name: "Home Cinema", desc: "Salas de cinema privadas com projeção, som imersivo e acústica otimizada." },
+            { name: "Media Rooms", desc: "Espaços multimédia versáteis para entretenimento e convívio familiar." },
+            { name: "Segurança", desc: "Sistemas de videovigilância, alarmes e monitorização remota." },
+            { name: "Suporte Técnico", desc: "Assistência técnica contínua, manutenção preventiva e suporte remoto." },
+          ],
         },
         commercial: {
           title: "Soluções Comerciais",
-          services: ["Consultoria IT", "Rede e Wi-Fi", "Soluções AV", "Automação e Controlo", "Segurança", "Suporte Técnico"],
+          services: [
+            { name: "Consultoria IT", desc: "Análise e planeamento de infraestruturas tecnológicas empresariais." },
+            { name: "Rede e Wi-Fi", desc: "Redes empresariais de alta performance e cobertura Wi-Fi profissional." },
+            { name: "Soluções AV", desc: "Equipamentos audiovisuais para salas de reuniões e espaços corporativos." },
+            { name: "Automação e Controlo", desc: "Gestão inteligente de iluminação, climatização e acessos no edifício." },
+            { name: "Segurança", desc: "Videovigilância, controlo de acessos e sistemas de alarme." },
+            { name: "Suporte Técnico", desc: "Manutenção e suporte técnico dedicado ao seu negócio." },
+          ],
         },
         marine: {
           title: "Soluções Marítimas",
-          services: ["Rede & Wi-Fi", "Automação e Controlo", "Áudio", "Home Cinema", "Media Rooms", "Segurança", "Suporte Técnico"],
+          services: [
+            { name: "Rede & Wi-Fi", desc: "Conectividade estável e segura a bordo, mesmo em alto mar." },
+            { name: "Automação e Controlo", desc: "Controlo integrado de sistemas de bordo, iluminação e climatização." },
+            { name: "Áudio", desc: "Sistemas de som de alta qualidade para interior e exterior da embarcação." },
+            { name: "Home Cinema", desc: "Experiência cinematográfica imersiva adaptada ao ambiente marítimo." },
+            { name: "Media Rooms", desc: "Espaços de entretenimento multimédia a bordo." },
+            { name: "Segurança", desc: "Sistemas de vigilância e segurança adaptados ao ambiente náutico." },
+            { name: "Suporte Técnico", desc: "Assistência técnica especializada para embarcações." },
+          ],
         },
       },
     },
