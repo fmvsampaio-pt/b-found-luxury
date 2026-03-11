@@ -172,7 +172,7 @@ const PlanningWizard = () => {
           <motion.div key="systems" {...variants}>
             <h2 className="font-display text-3xl md:text-4xl mb-2">{w.step2.title}</h2>
             <p className="text-muted-foreground mb-8">{w.step2.subtitle}</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pb-24">
               {SYSTEM_IDS.map((id) => {
                 const Icon = SYSTEM_ICONS[id];
                 const selected = formData.systems.includes(id);
