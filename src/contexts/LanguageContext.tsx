@@ -55,7 +55,7 @@ export const translations = {
           services: [
             { name: "Consultoria IT", desc: "Análise e planeamento de infraestruturas tecnológicas empresariais." },
             { name: "Rede e Wi-Fi", desc: "Redes empresariais de alta performance e cobertura Wi-Fi profissional." },
-            { name: "Soluções AV", desc: "Equipamentos audiovisuais para salas de reuniões e espaços corporativos." },
+            { name: "Soluções AV", desc: "Equipamentos audiovisuais para salas de reuniões, espaços corporativos, auditórios, lojas e restaurantes." },,
             { name: "Automação e Controlo", desc: "Gestão inteligente de iluminação, climatização e acessos no edifício." },
             { name: "Segurança", desc: "Videovigilância, controlo de acessos e sistemas de alarme." },
             { name: "Suporte Técnico", desc: "Manutenção e suporte técnico dedicado ao seu negócio." },
@@ -185,7 +185,7 @@ export const translations = {
           services: [
             { name: "IT Consulting", desc: "Analysis and planning of enterprise technology infrastructure." },
             { name: "Network Infrastructure", desc: "High-performance enterprise networks and professional Wi-Fi coverage." },
-            { name: "AV Solutions", desc: "Audiovisual equipment for meeting rooms and corporate spaces." },
+            { name: "AV Solutions", desc: "Audiovisual equipment for meeting rooms, corporate spaces, auditoriums, retail stores, and restaurants." },,
             { name: "Automation & Control", desc: "Intelligent management of lighting, climate and building access." },
             { name: "Security", desc: "Video surveillance, access control and alarm systems." },
             { name: "Technical Support", desc: "Dedicated maintenance and technical support for your business." },
