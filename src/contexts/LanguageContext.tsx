@@ -185,7 +185,7 @@ export const translations = {
           services: [
             { name: "IT Consulting", desc: "Analysis and planning of enterprise technology infrastructure." },
             { name: "Network Infrastructure", desc: "High-performance enterprise networks and professional Wi-Fi coverage." },
-            { name: "AV Solutions", desc: "Audiovisual equipment for meeting rooms and corporate spaces." },
+            { name: "AV Solutions", desc: "Audiovisual equipment for meeting rooms, corporate spaces, auditoriums, retail stores, and restaurants." },,
             { name: "Automation & Control", desc: "Intelligent management of lighting, climate and building access." },
             { name: "Security", desc: "Video surveillance, access control and alarm systems." },
             { name: "Technical Support", desc: "Dedicated maintenance and technical support for your business." },
