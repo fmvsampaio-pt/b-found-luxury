@@ -113,7 +113,7 @@ const ServicesSection = () => {
                   onClick={() => toggleService(service.name)}
                 >
                   <div className="flex items-center gap-3 p-3">
-                    <service.icon className="w-5 h-5 text-primary flex-shrink-0" />
+                    {service.icon && <service.icon className="w-5 h-5 text-primary flex-shrink-0" />}
                     <span className="text-sm tracking-wide text-muted-foreground group-hover/item:text-foreground transition-colors flex-1">
                       {service.name}
                     </span>
