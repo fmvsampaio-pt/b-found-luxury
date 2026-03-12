@@ -22,18 +22,6 @@ const Footer = () => {
           <img src={logo} alt="B-Found" className="h-12 w-auto" />
         </a>
 
-        <div className="flex items-center gap-8">
-          {["Facebook", "Instagram", "LinkedIn"].map((social) => (
-            <a
-              key={social}
-              href="#"
-              className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
-            >
-              {social}
-            </a>
-          ))}
-        </div>
-
         <div className="flex flex-col items-center md:items-end gap-2">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} B-Found. {t.footer.rights}
