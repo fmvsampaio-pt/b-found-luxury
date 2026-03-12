@@ -7,7 +7,7 @@ import marineImg from "@/assets/marine.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const categoryIcons = {
-  residential: [Wifi, Music, Headphones, Home, Film, Monitor, Shield, Wrench],
+  residential: [Wifi, Music, Headphones, Home, Film, Monitor, Shield, Lock, Wrench],
   commercial: [Server, Wifi, Monitor, Settings, Shield, Wrench],
   marine: [Wifi, Settings, Music, Film, Monitor, Shield, Wrench],
 };

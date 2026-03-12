@@ -176,7 +176,7 @@ export const translations = {
             { name: "Automation & Control", desc: "Centralised control of lighting, climate, blinds and more." },
             { name: "Home Cinema", desc: "Private cinema rooms with projection, immersive sound and optimised acoustics." },
             { name: "Media Rooms", desc: "Versatile multimedia spaces for entertainment and family gatherings." },
-            { name: "Security", desc: "Video surveillance, alarms and remote monitoring systems." },
+            { name: "Security", desc: "Video surveillance, alarms, access control and remote monitoring systems." },
             { name: "Technical Support", desc: "Ongoing technical assistance, preventive maintenance and remote support." },
           ],
         },
