@@ -46,7 +46,7 @@ export const translations = {
             { name: "Automação e Controlo", desc: "Controlo centralizado de iluminação, climatização, estores e muito mais." },
             { name: "Home Cinema", desc: "Salas de cinema privadas com projeção, som imersivo e acústica otimizada." },
             { name: "Media Rooms", desc: "Espaços multimédia versáteis para entretenimento e convívio familiar." },
-            { name: "Segurança", desc: "Sistemas de videovigilância, alarmes e monitorização remota." },
+            { name: "Segurança", desc: "Sistemas de videovigilância, alarmes, controlo de acessos e monitorização remota." },
             { name: "Suporte Técnico", desc: "Assistência técnica contínua, manutenção preventiva e suporte remoto." },
           ],
         },
