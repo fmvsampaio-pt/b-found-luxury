@@ -23,15 +23,7 @@ const Footer = () => {
         </a>
 
         <div className="flex items-center gap-8">
-          {["Facebook", "Instagram", "LinkedIn"].map((social) => (
-            <a
-              key={social}
-              href="#"
-              className="text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
-            >
-              {social}
-            </a>
-          ))}
+          {/* Social media links removed */}
         </div>
 
         <div className="flex flex-col items-center md:items-end gap-2">
