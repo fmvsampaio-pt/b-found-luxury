@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Home, Anchor, Building2, Music, Wifi, Shield, Lock, Film, Lightbulb, Speaker, Settings, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
