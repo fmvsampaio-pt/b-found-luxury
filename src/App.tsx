@@ -8,6 +8,8 @@ import NotFound from "./pages/NotFound";
 import PlanningWizard from "./pages/PlanningWizard";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { CookieConsentProvider } from "./contexts/CookieConsentContext";
 import CookieConsent from "./components/CookieConsent";
@@ -26,6 +28,10 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/planeamento" element={<PlanningWizard />} />
+              <Route path="/privacidade" element={<Privacy />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/termos" element={<Terms />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin" element={<AdminDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

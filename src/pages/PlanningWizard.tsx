@@ -40,6 +40,8 @@ const PlanningWizard = () => {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const startedAt = useRef<number>(Date.now());
   const [formData, setFormData] = useState<FormData>({
     spaceType: "", buildType: "", systems: [], timeline: "", name: "", email: "", notes: "",
   });
@@ -69,6 +71,11 @@ const PlanningWizard = () => {
   const getSystemLabel = (id: string) => (w.systems as Record<string, string>)[id] || id;
 
   const handleSubmit = async () => {
+    // Anti-bot: honeypot preenchido ou submissão em menos de 3 segundos
+    if (honeypot.trim() !== "" || Date.now() - startedAt.current < 3000) {
+      setSubmitted(true);
+      return;
+    }
     setSubmitting(true);
     try {
       const { error } = await supabase.from("planning_submissions").insert({
@@ -220,6 +227,12 @@ const PlanningWizard = () => {
                 <label className="text-sm text-muted-foreground mb-1.5 block">{w.step4.notesLabel}</label>
                 <textarea value={formData.notes} onChange={(e) => setFormData((p) => ({ ...p, notes: e.target.value }))} placeholder={w.step4.notesPlaceholder}
                   className="flex w-full rounded-md border border-border bg-card px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[100px] md:text-sm" maxLength={1000} />
+              </div>
+              {/* Honeypot anti-bot — não visível para humanos */}
+              <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+                <label>Website
+                  <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                </label>
               </div>
             </div>
           </motion.div>
