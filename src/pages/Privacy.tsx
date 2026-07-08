@@ -13,7 +13,7 @@ const content = {
     sections: [
       {
         h: "1. Responsável pelo tratamento",
-        p: "A B-Found, com sede na Av. Amália Rodrigues 36B, 2650-445 Amadora, Portugal, é a entidade responsável pelo tratamento dos dados pessoais recolhidos através deste website. Contacto: geral@b-found.pt · +351 210 939 977.",
+        p: "A B-Found, com sede na Av. Amália Rodrigues 36B, 2650-437 Amadora, Portugal, é a entidade responsável pelo tratamento dos dados pessoais recolhidos através deste website. Contacto: geral@b-found.pt · +351 210 939 977.",
       },
       {
         h: "2. Dados que recolhemos",
@@ -53,7 +53,7 @@ const content = {
     sections: [
       {
         h: "1. Data controller",
-        p: "B-Found, based at Av. Amália Rodrigues 36B, 2650-445 Amadora, Portugal, is the entity responsible for processing personal data collected through this website. Contact: geral@b-found.pt · +351 210 939 977.",
+        p: "B-Found, based at Av. Amália Rodrigues 36B, 2650-437 Amadora, Portugal, is the entity responsible for processing personal data collected through this website. Contact: geral@b-found.pt · +351 210 939 977.",
       },
       {
         h: "2. Data we collect",
