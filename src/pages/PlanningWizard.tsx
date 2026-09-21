@@ -5,9 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo-bfound.png";
+
+const consentCopy = {
+  pt: {
+    label: "Autorizo a B-Found a tratar os dados aqui indicados para responder ao meu pedido de orçamento.",
+    note: "Os dados não são partilhados com terceiros para fins comerciais. Pode retirar o consentimento a qualquer momento.",
+    privacy: "Política de Privacidade",
+  },
+  en: {
+    label: "I authorise B-Found to process the data provided here in order to respond to my quote request.",
+    note: "Data is not shared with third parties for commercial purposes. You may withdraw consent at any time.",
+    privacy: "Privacy Policy",
+  },
+};
 
 const SPACE_TYPE_IDS = ["residential", "marine", "commercial"] as const;
 const SPACE_TYPE_ICONS = { residential: Home, marine: Anchor, commercial: Building2 };
