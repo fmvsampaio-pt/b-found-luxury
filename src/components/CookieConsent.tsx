@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronDown, ShieldCheck, BarChart2, Megaphone, SlidersHorizontal } from "lucide-react";
 import { useCookieConsent, ConsentState } from "@/contexts/CookieConsentContext";

@@ -54,6 +54,13 @@ const Footer = () => {
               {l.terms}
             </Link>
             <span className="text-muted-foreground/40">·</span>
+            <Link
+              to="/cookies"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300"
+            >
+              {l.cookiePolicy}
+            </Link>
+            <span className="text-muted-foreground/40">·</span>
             <button
               onClick={openPreferences}
               className="text-muted-foreground hover:text-primary transition-colors duration-300"
