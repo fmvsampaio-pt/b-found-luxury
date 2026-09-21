@@ -6,11 +6,13 @@ import { useCookieConsent } from "@/contexts/CookieConsentContext";
 const labels = {
   pt: {
     cookies: "Preferências de Cookies",
+    cookiePolicy: "Política de Cookies",
     privacy: "Política de Privacidade",
     terms: "Termos e Condições",
   },
   en: {
     cookies: "Cookie Preferences",
+    cookiePolicy: "Cookie Policy",
     privacy: "Privacy Policy",
     terms: "Terms & Conditions",
   },
