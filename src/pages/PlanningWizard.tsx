@@ -48,7 +48,9 @@ type FormData = {
 
 const PlanningWizard = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const cc = consentCopy[language];
+  const [consentGiven, setConsentGiven] = useState(false);
   const w = t.wizard;
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -74,7 +76,7 @@ const PlanningWizard = () => {
       case 1: return formData.buildType !== "";
       case 2: return formData.systems.length > 0;
       case 3: return formData.timeline !== "";
-      case 4: return formData.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+      case 4: return consentGiven && formData.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
       default: return true;
     }
   };
