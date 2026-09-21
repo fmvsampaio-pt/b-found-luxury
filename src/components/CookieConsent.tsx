@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronDown, ShieldCheck, BarChart2, Megaphone, SlidersHorizontal } from "lucide-react";
 import { useCookieConsent, ConsentState } from "@/contexts/CookieConsentContext";
@@ -241,12 +242,12 @@ const PreferencesPanel = () => {
             {c.save}
           </button>
           <div className="flex justify-center gap-6 mt-4">
-            <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
+            <Link to="/privacidade" onClick={closePreferences} className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
               {c.policyLink}
-            </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
+            </Link>
+            <Link to="/cookies" onClick={closePreferences} className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
               {c.cookieLink}
-            </a>
+            </Link>
           </div>
         </div>
       </motion.div>
@@ -313,12 +314,12 @@ const CookieBanner = () => {
 
         {/* Links */}
         <div className="flex gap-6 mt-4 pt-4 border-t border-border/50">
-          <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
+          <Link to="/privacidade" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
             {c.policyLink}
-          </a>
-          <a href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
+          </Link>
+          <Link to="/cookies" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
             {c.cookieLink}
-          </a>
+          </Link>
         </div>
       </div>
     </motion.div>

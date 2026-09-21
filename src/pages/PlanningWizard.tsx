@@ -5,9 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo-bfound.png";
+
+const consentCopy = {
+  pt: {
+    label: "Autorizo a B-Found a tratar os dados aqui indicados para responder ao meu pedido de orçamento.",
+    note: "Os dados não são partilhados com terceiros para fins comerciais. Pode retirar o consentimento a qualquer momento.",
+    privacy: "Política de Privacidade",
+  },
+  en: {
+    label: "I authorise B-Found to process the data provided here in order to respond to my quote request.",
+    note: "Data is not shared with third parties for commercial purposes. You may withdraw consent at any time.",
+    privacy: "Privacy Policy",
+  },
+};
 
 const SPACE_TYPE_IDS = ["residential", "marine", "commercial"] as const;
 const SPACE_TYPE_ICONS = { residential: Home, marine: Anchor, commercial: Building2 };
@@ -35,7 +48,9 @@ type FormData = {
 
 const PlanningWizard = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const cc = consentCopy[language];
+  const [consentGiven, setConsentGiven] = useState(false);
   const w = t.wizard;
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
@@ -61,7 +76,7 @@ const PlanningWizard = () => {
       case 1: return formData.buildType !== "";
       case 2: return formData.systems.length > 0;
       case 3: return formData.timeline !== "";
-      case 4: return formData.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+      case 4: return consentGiven && formData.email.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
       default: return true;
     }
   };
