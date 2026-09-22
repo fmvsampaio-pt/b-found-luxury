@@ -249,7 +249,26 @@ const PlanningWizard = () => {
                   <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
                 </label>
               </div>
+              <div className="rounded-md border border-border bg-card/50 p-4">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={consentGiven}
+                    onChange={(e) => setConsentGiven(e.target.checked)}
+                    className="mt-1 h-4 w-4 shrink-0 accent-primary"
+                    required
+                  />
+                  <span className="text-sm text-muted-foreground leading-relaxed">
+                    {cc.label}{" "}
+                    <Link to="/privacidade" target="_blank" className="text-primary underline underline-offset-4">
+                      {cc.privacy}
+                    </Link>
+                  </span>
+                </label>
+                <p className="text-xs text-muted-foreground/70 mt-2 pl-7">{cc.note}</p>
+              </div>
             </div>
+
           </motion.div>
         );
       case 5:
