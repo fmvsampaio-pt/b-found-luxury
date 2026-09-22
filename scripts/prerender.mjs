@@ -21,6 +21,24 @@ const routes = [
     description: 'Configure a tecnologia ideal para a sua casa com o nosso guia interativo e receba um orçamento personalizado da B-Found.',
     canonical: 'https://b-found.pt/planeamento',
   },
+  {
+    path: '/privacidade',
+    title: 'Política de Privacidade | B-Found',
+    description: 'Saiba como a B-Found recolhe, utiliza e protege os seus dados pessoais, em conformidade com o RGPD.',
+    canonical: 'https://b-found.pt/privacidade',
+  },
+  {
+    path: '/cookies',
+    title: 'Política de Cookies | B-Found',
+    description: 'Informação detalhada sobre os cookies e armazenamento local utilizados no site da B-Found e como gerir as suas preferências.',
+    canonical: 'https://b-found.pt/cookies',
+  },
+  {
+    path: '/termos',
+    title: 'Termos e Condições | B-Found',
+    description: 'Termos e condições de utilização do site e dos serviços da B-Found.',
+    canonical: 'https://b-found.pt/termos',
+  },
 ];
 
 for (const route of routes) {
